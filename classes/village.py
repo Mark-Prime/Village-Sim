@@ -27,12 +27,17 @@ class Village():
             self._villagers.pop(random.randint(1, self.population - 1))
             
     def census(self):
-        census = {}
+        census = {
+            "Child": 0,
+            "Teenager": 0,
+            "Young Adult": 0,
+            "Adult": 0,
+            "Older Adult": 0,
+            "Senior": 0,
+            "Elder": 0
+        }
         
         for villager in self._villagers:
-            if villager.age not in census.keys():
-                census[villager.age] = 0
-                
             census[villager.age] += 1
         
         print(census)

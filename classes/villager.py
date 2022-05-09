@@ -3,6 +3,21 @@ import random
 
 class Villager:
     TOTAL = 0
+    growing_pains = {
+        "Child": 0.3,
+        "Teenager": 1,
+        "Young Adult": 2,
+        "Adult": 2.5,
+        "Older Adult": 3,
+        "Senior": 5,
+        "Elder": 7
+    }
+    pregnancy_pain = {
+        "Teenager": 5,
+        "Young Adult": 2,
+        "Adult": 2,
+        "Older Adult": 3
+    }
     
     def __init__(self, age, birth_month):
         Villager.TOTAL += 1
@@ -56,28 +71,7 @@ class Villager:
         self.heal(random.randint(3, 5))
         
     def growing_pains(self):
-        match self.age:
-            case "Child":
-                self.hurt(0.3)
-                return
-            case "Teenager":
-                self.hurt(1)
-                return
-            case "Young Adult":
-                self.hurt(2)
-                return
-            case "Adult":
-                self.hurt(2.5)
-                return
-            case "Older Adult":
-                self.hurt(3)
-                return
-            case "Senior":
-                self.hurt(5)
-                return
-            case "Elder":
-                self.hurt(7)
-                return
+        self.hurt(Villager.growing_pains[self.age])
                 
     def check_pregnancy(self):
         if self.is_pregnant:
@@ -87,23 +81,14 @@ class Villager:
                 self.is_pregnant = False
                 
                 # Pregnancy is painful
-                match self.age:
-                    case "Teenager":
-                        self.hurt(5)
-                    case "Young Adult":
-                        self.hurt(2)
-                    case "Adult":
-                        self.hurt(2)
-                    case "Older Adult":
-                        self.hurt(3)
+                self.hurt(Villager.pregnancy_pain[self.age])
                 
                 return "BIRTH"
             
             return
         
-        if random.randint(1, 100) < 2 and 12 < self._age < 65:
+        if (random.randint(1, 100) < 2) and (12 < self._age < 65):
             self.is_pregnant = True
-            return
         
         return
                 
